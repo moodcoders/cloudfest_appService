@@ -8,7 +8,9 @@ const ServiceSchema: Schema = new Schema({
         type: Boolean,
         default: false
     },
-    imgUrl: String
+    imgUrl: String,
+    description: String,
+    price: Number
 });
 
-export default model('Services', ServiceSchema);
+export default model('services', ServiceSchema);

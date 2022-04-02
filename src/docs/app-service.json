@@ -85,6 +85,14 @@
                         "schema": {
                             "$ref": "#/definitions/Order"
                         }
+                    },
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "_id of the booking",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -106,6 +114,16 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "_id of the booking",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "500": {
                         "description": "Internal server error"
@@ -122,15 +140,16 @@
                         "JWT": []
                     }
                 ],
-                 "consumes": [
+                "consumes": [
                     "application/json"
-                ], "parameters": [
+                ],
+                "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Send booking details to update them in db",
+                        "in": "query",
+                        "name": "id",
+                        "description": "_id of the booking",
                         "schema": {
-                            "$ref": "#/definitions/Get"
+                            "type": "string"
                         }
                     }
                 ],
@@ -155,6 +174,16 @@
                 "produces": [
                     "application/json"
                 ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "the userid",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "500": {
                         "description": "Internal server error"
@@ -163,7 +192,7 @@
             }
         },
         "/review": {
-            "post": {
+            "patch": {
                 "tags": [
                     "Review"
                 ],
@@ -172,18 +201,28 @@
                     {
                         "JWT": []
                     }
-                ]
-            },
-            "patch": {
-                "tags": [
-                    "Review"
                 ],
-                "summary": "update an existing review",
-                "security": [
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
                     {
-                        "JWT": []
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send review details to save them in db",
+                        "schema": {
+                            "$ref": "#/definitions/Review"
+                        }
                     }
-                ]
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
             },
             "get": {
                 "tags": [
@@ -194,9 +233,29 @@
                     {
                         "JWT": []
                     }
-                ]
-            },
-            "delete": {
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "_id of the booking",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/review/delete": {
+            "patch": {
                 "tags": [
                     "Review"
                 ],
@@ -205,15 +264,85 @@
                     {
                         "JWT": []
                     }
-                ]
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "_id of the booking",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
             }
         },
-        "/data/services": {
+        "/services": {
+            "post": {
+                "tags": [
+                    "Data"
+                ],
+                "summary": "create a service",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Send servicedetails to save them in db",
+                        "schema": {
+                            "$ref": "#/definitions/Service"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
             "get": {
                 "tags": [
                     "Data"
                 ],
-                "summary": "List of services that are supported"
+                "summary": "get details of a service",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "name",
+                        "description": "name of the service",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
             }
         }
     },
@@ -228,58 +357,107 @@
         "Order": {
             "type": "object",
             "properties": {
-                    "location": {
-                        "type" :"string"
-                    },
-                    "serviceType":  {
-                        "type" :"string"
-                    },
-                    "schedule": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "isCompleted": {
-                        "type" :"boolean"
-                    },
-                    "handyman": {
-                        "type": "object",
-                        "properties": {
-                            "name":  {
-                                "type" :"string"
-                            },
-                            "rating": {
-                                "type" :"number"
-                            },
-                            "experience": {
-                                "type" :"number"
-                            },
-                            "profile": {
-                                "type" :"number"
-                            }
+                "location": {
+                    "type": "string"
+                },
+                "serviceType": {
+                    "type": "string"
+                },
+                "schedule": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "isCompleted": {
+                    "type": "boolean"
+                },
+                "handyman": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "rating": {
+                            "type": "number"
+                        },
+                        "experience": {
+                            "type": "number"
+                        },
+                        "profile": {
+                            "type": "number"
                         }
-                    },
-                    "userId": {
-                        "type" :"string"
-                    },
-                    "isPaid": {
-                        "type" :"boolean"
-                    },
-                    "paymenType":  {
-                        "type" :"string"
-                    },
-                    "feedback":  {
-                        "type" :"string"
                     }
-            },
-            "xml": {
-                "name": "Order"
+                },
+                "userId": {
+                    "type": "string",
+                    "default": "623b7de9686da70164931c7c"
+                },
+                "isPaid": {
+                    "type": "boolean"
+                },
+                "paymenType": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "object",
+                    "properties": {
+                        "feedback": {
+                            "type": "string"
+                        },
+                        "rating": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "xml": {
+                    "name": "Order"
+                }
             }
         },
-        "Get" :{
+        "Get": {
             "type": "object",
             "properties": {
-                "userId":{
-                    "type" : "string"
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "Review": {
+            "type": "object",
+            "properties": {
+                "rating": {
+                    "type": "object",
+                    "properties": {
+                        "feedback": {
+                            "type": "string"
+                        },
+                        "rating": {
+                            "type": "number"
+                        }
+                    }
+                },
+                "id": {
+                    "type": "string"
+                }
+            }
+        },
+        "Service":{
+            "type": "object",
+            "properties" :{
+                "name": {
+                    "type" :"string"
+                },
+                "isDisabled": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "imgUrl": {
+                    "type" :"string"
+                },
+                "description": {
+                    "type" :"string"
+                },
+                "price":  {
+                    "type" :"number"
                 }
             }
         },

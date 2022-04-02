@@ -1,53 +1,61 @@
 import { Request, Response } from 'express';
 import bookings from '../models/bookings';
+import logger from '../utils/logger';
 
-export const createBooking = async (req: Request, res: Response, ) => {
+export const createBooking = async (req: Request, res: Response,) => {
     try {
         console.log(req.body);
         const update = await new bookings(req.body);
         update.save()
         res.json(update);
     } catch (error: any) {
-         res.sendStatus(400);
+        logger.error(error);
+        res.sendStatus(400);
     }
 };
 
 export const updateBooking = async (req: Request, res: Response) => {
     try {
-        const filter ={
-            "userId": req.body.userId,
-        }
-        const update = await bookings.findOneAndUpdate(filter, req.body); //TODO: change the model from customer to handyman
+        // const filter ={
+        //     "userId": req.body.userId,
+        // }
+        const update = await bookings.findByIdAndUpdate(req.query.id, req.body);
         res.json(update);
     } catch (error: any) {
+        logger.error(error);
         res.sendStatus(400);
     }
 };
 
 export const getBooking = async (req: Request, res: Response) => {
-    try{
-        const update = await bookings.findOne(); //TODO: change the model from customer to handyman
+    try {
+        const update = await bookings.findById(req.query.id);
         res.json(update);
     } catch (error: any) {
+        logger.error(error);
         res.sendStatus(400);
     }
 }
 
 
 export const deleteBooking = async (req: Request, res: Response) => {
-    try{
-         await bookings.deleteOne({ userId: req.body.userId }); //TODO: change the model from customer to handyman
+    try {
+        await bookings.findByIdAndDelete(req.query.id);
         res.json('booking deleted');
     } catch (error: any) {
+        logger.error(error);
         res.sendStatus(400);
     }
 }
 
 export const getBookings = async (req: Request, res: Response) => {
-    try{
-        const update = await bookings.find(); //TODO: change the model from customer to handyman
-        res.json(update);
+    try {
+        const bookingList = await bookings.find({ userId: req.query.id }); //TODO: check customer/handyman's _id to verify request 
+        res.json(bookingList);
     } catch (error: any) {
+        logger.error(error);
         res.sendStatus(400);
     }
 }
+
+//TODO: need to implement pagination in get bookings

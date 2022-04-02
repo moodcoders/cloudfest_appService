@@ -1,4 +1,5 @@
 // model for bookings collection
+import mongoose from 'mongoose';
 import { Schema, model } from 'mongoose';
 
 const HandymanSchema = new Schema({
@@ -16,6 +17,13 @@ const HandymanSchema = new Schema({
     }
 });
 
+const RatingSchema = new Schema({
+    feedback: String,
+    rating: {
+        type: Number,
+        default: 0
+    }
+})
 const BookingSchema = new Schema({
     location: {
         type: String
@@ -34,7 +42,7 @@ const BookingSchema = new Schema({
     },
     handyman: HandymanSchema,
     userId: {
-        type: String
+        type: mongoose.Types.ObjectId
     },
     isPaid: {
         type: Boolean
@@ -48,7 +56,7 @@ const BookingSchema = new Schema({
     // rating can +ve integer value between
     // [1-5] and null incase of a service whose rating is not given
     rating: {
-        type: Schema.Types.Mixed
+        type: RatingSchema
     }
 });
 
