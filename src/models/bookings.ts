@@ -1,5 +1,4 @@
 // model for bookings collection
-
 import { Schema, model } from 'mongoose';
 
 const HandymanSchema = new Schema({

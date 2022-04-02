@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import morgan from 'morgan'
 
+import { bookingRouter, bookingsRouter } from './routers/router';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './docs/app-service.json';
 import logger from './utils/logger';
@@ -17,6 +18,10 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json());
 app.use(morgan('dev'));
 
+app.use('/v1/booking', bookingRouter);
+
+app.use('/v1/bookings', bookingsRouter);
+
 export default async () => {
     try {
         app.listen(4001, () => {
@@ -27,3 +32,4 @@ export default async () => {
         throw new Error('An error occured while starting the server');
     }
 }
+
