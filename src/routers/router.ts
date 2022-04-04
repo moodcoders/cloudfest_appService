@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { createBooking, updateBooking, getBooking, deleteBooking, getBookings } from '../controllers/bookingControlers';
+import { createBooking, updateBooking, getBooking, deleteBooking, getBookings } from '../controllers/bookingControllers';
 import { updateReview, getReview, deleteReview } from '../controllers/reviewControllers';
 import { createServices, getServices } from '../controllers/servicesControllers';
 
