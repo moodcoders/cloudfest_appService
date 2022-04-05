@@ -344,6 +344,27 @@
                     }
                 }
             }
+        },
+        "/services/listAll":{
+            "get": {
+                "tags": [
+                    "Data"
+                ],
+                "summary": "get details of a service",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {

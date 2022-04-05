@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
+import { createServices, getServices, getAllServices } from '../controllers/servicesControllers';
 import { createBooking, updateBooking, getBooking, deleteBooking, getBookings } from '../controllers/bookingControllers';
 import { updateReview, getReview, deleteReview } from '../controllers/reviewControllers';
-import { createServices, getServices } from '../controllers/servicesControllers';
 
 export const bookingRouter: Router = Router();
 bookingRouter.post( '/', createBooking );
@@ -21,3 +21,5 @@ reviewRouter.patch( '/delete', deleteReview );
 export const servicesRouter: Router = Router();
 servicesRouter.post( '/', createServices );
 servicesRouter.get( '/', getServices );
+servicesRouter.get( '/listAll', getAllServices );
+
