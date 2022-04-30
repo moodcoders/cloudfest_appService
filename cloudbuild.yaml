@@ -1,0 +1,10 @@
+steps:
+- id: docker build
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/app-service:$SHORT_SHA', '.']
+- id: docker push
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/app-service:$SHORT_SHA']
+
+images:
+- gcr.io/$PROJECT_ID/app-service:$SHORT_SHA
