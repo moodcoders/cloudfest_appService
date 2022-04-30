@@ -4,7 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run clean && npm run transpile",
+    "bundle": "npm install && npm run build && npm pack",
+    "clean": "rm -rf dist",
+    "sonar-scanner": "sonar-scanner",
+    "start": "nodemon",
+    "transpile": "tsc",
     "dev": "nodemon src/index.ts"
   },
   "repository": {

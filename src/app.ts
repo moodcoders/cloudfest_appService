@@ -25,8 +25,8 @@ app.use('/v1/services', servicesRouter);
 
 export default async () => {
     try {
-        app.listen(4001, () => {
-            logger.info('App Service listening on http://localhost:4001')
+        app.listen(5000, () => {
+            logger.info('App Service listening on http://localhost:5000')
         });
     } catch (error) {
         logger.error('An error occured while starting the server');
